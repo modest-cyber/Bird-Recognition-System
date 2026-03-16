@@ -1,0 +1,115 @@
+# ==================== Python ====================
+# 字节码文件
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C 扩展
+*.so
+
+# 分发/打包
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ==================== 虚拟环境 ====================
+venv/
+ENV/
+env/
+.venv/
+.ENV/
+env.bak/
+venv.bak/
+
+# ==================== IDE/编辑器 ====================
+# PyCharm
+.idea/
+*.iml
+*.iws
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# ==================== 测试 ====================
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# ==================== 日志文件 ====================
+*.log
+logs/
+log/
+
+# ==================== 环境变量 ====================
+.env
+.env.local
+.env.*.local
+*.env
+
+# ==================== 上传文件目录 ====================
+uploads/
+datasets/
+training_output/
+
+# ==================== YOLO 模型权重 ====================
+yolo/weights/
+*.pt
+*.onnx
+
+# ==================== 数据库 ====================
+*.db
+*.sqlite3
+
+# ==================== macOS ====================
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# ==================== Windows ====================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ==================== 其他 ====================
+*.bak
+*.tmp
+*.temp
+.python-version
+pip-log.txt
+pip-delete-this-directory.txt
