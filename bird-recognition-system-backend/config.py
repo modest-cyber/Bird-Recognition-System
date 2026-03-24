@@ -1,12 +1,9 @@
-"""
-鸟类识别系统 - 配置文件
-包含数据库、Redis、JWT 等配置
-"""
 import os
 from datetime import timedelta
 
 # 项目根目录
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(BASE_DIR)
 
 # ==================== 数据库配置 ====================
 MYSQL_HOST = os.getenv("MYSQL_HOST", "localhost")
@@ -20,7 +17,7 @@ DATABASE_URL = f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYS
 # ==================== Redis 配置 ====================
 REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
 REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
-REDIS_PASSWORD = os.getenv("REDIS_PASSWORD", None)  # Redis 默认无密码
+REDIS_PASSWORD = os.getenv("REDIS_PASSWORD", None)
 REDIS_DB = int(os.getenv("REDIS_DB", 0))
 
 # ==================== JWT 配置 ====================
@@ -30,8 +27,26 @@ JWT_ACCESS_TOKEN_EXPIRE_DAYS = 7
 JWT_ACCESS_TOKEN_EXPIRE = timedelta(days=JWT_ACCESS_TOKEN_EXPIRE_DAYS)
 
 # ==================== YOLO 配置 ====================
-YOLO_WEIGHTS_PATH = os.path.join(BASE_DIR, "yolo", "weights", "bird_model.pt")
-YOLO_CONFIDENCE_THRESHOLD = 0.4
+YOLO_LOCAL_SOURCE_DIR = os.path.join(PROJECT_ROOT, "ultralytics-main")
+YOLO_DEFAULT_WEIGHTS_PATH = os.path.join(BASE_DIR, "yolo", "weights", "bird_model.pt")
+YOLO_DATASET_WEIGHTS_PATH = os.path.join(PROJECT_ROOT, "yolov8-bird", "best.pt")
+YOLO_WEIGHTS_CANDIDATES = [
+    os.getenv("YOLO_WEIGHTS_PATH"),
+    YOLO_DEFAULT_WEIGHTS_PATH,
+    YOLO_DATASET_WEIGHTS_PATH,
+]
+
+
+def resolve_yolo_weights_path() -> str:
+    """返回当前应使用的 YOLO 权重路径。"""
+    for candidate in YOLO_WEIGHTS_CANDIDATES:
+        if candidate and os.path.exists(candidate):
+            return candidate
+    return YOLO_DEFAULT_WEIGHTS_PATH
+
+
+YOLO_WEIGHTS_PATH = resolve_yolo_weights_path()
+YOLO_CONFIDENCE_THRESHOLD = float(os.getenv("YOLO_CONFIDENCE_THRESHOLD", 0.4))
 
 # ==================== 数据集配置 ====================
 DATASET_DIR = os.path.join(BASE_DIR, "datasets")
@@ -51,15 +66,15 @@ DEFAULT_IMG_SIZE = 640
 UPLOAD_DIR = os.path.join(BASE_DIR, "uploads")
 UPLOAD_ORIGINAL_DIR = os.path.join(UPLOAD_DIR, "original")
 UPLOAD_ANNOTATED_DIR = os.path.join(UPLOAD_DIR, "annotated")
-MAX_UPLOAD_SIZE = 10 * 1024 * 1024  # 10MB
+MAX_UPLOAD_SIZE = 10 * 1024 * 1024
 ALLOWED_EXTENSIONS = {"jpg", "jpeg", "png", "webp"}
 
 # ==================== 缓存配置 ====================
-CACHE_BIRD_LIST_TTL = 600  # 鸟类列表缓存 10 分钟
-CACHE_ADMIN_STATS_TTL = 300  # 统计数据缓存 5 分钟
+CACHE_BIRD_LIST_TTL = 600
+CACHE_ADMIN_STATS_TTL = 300
 
 # ==================== CORS 配置 ====================
-CORS_ORIGINS = ["*"]  # 允许所有来源
+CORS_ORIGINS = ["*"]
 
 # ==================== 分页默认配置 ====================
 DEFAULT_PAGE = 1

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <el-header class="navbar">
     <div class="navbar-left">
       <router-link to="/home" class="logo">
@@ -6,7 +6,7 @@
         <span>鸟类识别系统</span>
       </router-link>
     </div>
-    
+
     <el-menu
       mode="horizontal"
       :default-active="activeMenu"
@@ -15,12 +15,11 @@
       class="navbar-menu"
     >
       <el-menu-item index="/home">首页</el-menu-item>
-      <el-menu-item index="/recognize" v-if="userStore.isLoggedIn">识别</el-menu-item>
-      <el-menu-item index="/birds">鸟类百科</el-menu-item>
-      <el-menu-item index="/history" v-if="userStore.isLoggedIn">历史记录</el-menu-item>
+      <el-menu-item index="/recognize" v-if="userStore.isLoggedIn">立即识别</el-menu-item>
+      <el-menu-item index="/history" v-if="userStore.isLoggedIn">识别历史</el-menu-item>
       <el-menu-item index="/admin" v-if="userStore.isAdmin">管理后台</el-menu-item>
     </el-menu>
-    
+
     <div class="navbar-right">
       <template v-if="userStore.isLoggedIn">
         <el-dropdown @command="handleCommand">
@@ -48,7 +47,7 @@
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
-import { ElMessageBox, ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 const route = useRoute()
 const router = useRouter()
@@ -67,8 +66,10 @@ const handleCommand = (command) => {
       ElMessage.success('已退出登录')
       router.push('/login')
     }).catch(() => {})
-  } else if (command === 'profile') {
-    // 可以跳转到个人中心页面
+    return
+  }
+
+  if (command === 'profile') {
     ElMessage.info('个人中心功能开发中')
   }
 }
@@ -94,7 +95,7 @@ const handleCommand = (command) => {
   display: flex;
   align-items: center;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 700;
   color: #409eff;
   text-decoration: none;
   gap: 8px;

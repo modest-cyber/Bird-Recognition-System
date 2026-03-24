@@ -80,7 +80,6 @@ app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
 from routers.auth import router as auth_router
 from routers.user import router as user_router
 from routers.recognize import router as recognize_router
-from routers.birds import router as birds_router
 from routers.records import router as records_router
 from routers.admin import router as admin_router
 from routers.dataset import router as dataset_router
@@ -88,7 +87,6 @@ from routers.dataset import router as dataset_router
 app.include_router(auth_router)
 app.include_router(user_router)
 app.include_router(recognize_router)
-app.include_router(birds_router)
 app.include_router(records_router)
 app.include_router(admin_router)
 app.include_router(dataset_router)
